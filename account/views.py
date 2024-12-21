@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 def user_login(request):
     if request.user.is_authenticated == True:
         print('User logged in')
-        return redirect('/')
+        return redirect('home_app:home')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -16,14 +16,14 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('/')
+            return redirect('home_app:home')
 
     return render(request,'account/login.html',{})
 
 def user_register(request):
     context = {'errors':[]}
     if request.user.is_authenticated==True:
-        return redirect('/')
+        return redirect('home_app:home')
     if request.method =="POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -31,13 +31,13 @@ def user_register(request):
         password2 = request.POST.get('password2')
         if password1 != password2:
             context['errors'].append('passwords are not match')
-            return render(request,'account/register.html',context)
-        if User.objects.get(username=username):
-            context['errors'].append('this username exists.')
-            return render(request,'account/register.html',context)
+            return render(request,'account/register.html', context)
+        # if User.objects.get(username=username):
+        #     context['errors'].append('this username exists.')
+        #     return render(request,'account/register.html',context)
         user=User.objects.create(username=username,email=email,password=password1)
-        login(request,user)
-        return redirect('/')
+        login(request, user)
+        return redirect('home_app:home')
 
 
 
@@ -47,4 +47,4 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('home_app:home')
