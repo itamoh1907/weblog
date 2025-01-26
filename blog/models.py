@@ -65,3 +65,25 @@ class New(models.Model):
         self.title = self.title.replace(' ','-')
         super(New,self).save(*args, **kwargs)
 
+class Comment(models.Model):
+    article= models.ForeignKey(Article,on_delete=models.CASCADE,related_name='comments')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='comments')
+    body = models.TextField()
+    parent = models.ForeignKey('self',on_delete=models.CASCADE,related_name='replies',null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.body[:20]
+
+
+
+class Message(models.Model):
+    title = models.CharField(max_length=100)
+    age = models.IntegerField(default=0)
+    text = models.TextField()
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    # date=models.DateTimeField(default=timezone.now())
+
+    def __str__(self):
+        return self.title

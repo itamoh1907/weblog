@@ -90,15 +90,15 @@
                                     {% endif %}
                                 {%  for i in articles_list.paginator.page_range %}
                                     {%  if articles_list.number == i %}
-                                      <li class="active"><a  href="?page={{ i }}">{{ i }}</a></li>
+                                      <li class="active"><a  href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li>
 
                                     {%  else %}
-                                    <li ><a href="?page={{ i }}">{{ i }}</a></li>
+                                    <li ><a href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a></li>
 
                                      {% endif %}
                                      {% endfor %}
                                   {%  if articles_list.has_next %}
-                                    <li><a href="?page={{ articles_list.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+                                    <li><a href="?page={{ articles_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa fa-angle-double-right"></i></a></li>
                                     {% endif %}
                                 </ul>
                                       {%  endif %}
